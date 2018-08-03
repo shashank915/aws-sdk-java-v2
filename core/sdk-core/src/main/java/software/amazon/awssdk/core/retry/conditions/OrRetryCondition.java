@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import software.amazon.awssdk.annotations.SdkPublicApi;
 import software.amazon.awssdk.core.retry.RetryPolicyContext;
+import software.amazon.awssdk.utils.ToString;
 
 /**
  * Composite retry condition that evaluates to true if any containing condition evaluates to true.
@@ -43,5 +44,31 @@ public final class OrRetryCondition implements RetryCondition {
 
     public static OrRetryCondition create(RetryCondition... conditions) {
         return new OrRetryCondition(conditions);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        final OrRetryCondition that = (OrRetryCondition) o;
+
+        return conditions.equals(that.conditions);
+    }
+
+    @Override
+    public int hashCode() {
+        return conditions.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return ToString.builder("OrRetryCondition")
+                       .add("conditions", conditions)
+                       .build();
     }
 }

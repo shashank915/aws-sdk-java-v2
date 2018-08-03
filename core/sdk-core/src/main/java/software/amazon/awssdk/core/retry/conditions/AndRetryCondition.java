@@ -20,6 +20,7 @@ import java.util.Collections;
 import java.util.List;
 import software.amazon.awssdk.annotations.SdkPublicApi;
 import software.amazon.awssdk.core.retry.RetryPolicyContext;
+import software.amazon.awssdk.utils.ToString;
 import software.amazon.awssdk.utils.Validate;
 
 /**
@@ -44,5 +45,31 @@ public final class AndRetryCondition implements RetryCondition {
 
     public static AndRetryCondition create(RetryCondition... conditions) {
         return new AndRetryCondition(conditions);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        final AndRetryCondition that = (AndRetryCondition) o;
+
+        return conditions != null ? conditions.equals(that.conditions) : that.conditions == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return conditions != null ? conditions.hashCode() : 0;
+    }
+
+    @Override
+    public String toString() {
+        return ToString.builder("AndRetryCondition")
+                       .add("conditions", conditions)
+                       .build();
     }
 }
