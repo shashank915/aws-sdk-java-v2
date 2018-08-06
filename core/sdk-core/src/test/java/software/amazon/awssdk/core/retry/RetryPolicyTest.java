@@ -75,7 +75,7 @@ public class RetryPolicyTest {
     public void nonRetryPolicy_shouldUseNullCondition() {
         RetryPolicy noneRetry = RetryPolicy.none();
 
-        assertThat(noneRetry.retryCondition()).isEqualTo(RetryCondition.none());
+        assertThat(noneRetry.retryCondition().shouldRetry(RetryPolicyContext.builder().build())).isFalse();
         assertThat(noneRetry.numRetries()).isZero();
         assertThat(noneRetry.backoffStrategy()).isEqualTo(BackoffStrategy.none());
         assertThat(noneRetry.throttlingBackoffStrategy()).isEqualTo(BackoffStrategy.none());

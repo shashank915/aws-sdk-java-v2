@@ -15,9 +15,9 @@
 
 package software.amazon.awssdk.core.retry.conditions;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import software.amazon.awssdk.annotations.SdkPublicApi;
 import software.amazon.awssdk.core.retry.RetryPolicyContext;
 import software.amazon.awssdk.utils.ToString;
@@ -28,7 +28,7 @@ import software.amazon.awssdk.utils.ToString;
 @SdkPublicApi
 public final class OrRetryCondition implements RetryCondition {
 
-    private List<RetryCondition> conditions = new ArrayList<>();
+    private Set<RetryCondition> conditions = new HashSet<>();
 
     private OrRetryCondition(RetryCondition... conditions) {
         Collections.addAll(this.conditions, conditions);

@@ -55,12 +55,8 @@ public final class RetryPolicy implements ToCopyableBuilder<RetryPolicy.Builder,
         this.throttlingBackoffStrategy = builder.throttlingBackoffStrategy;
         this.numRetries = builder.numRetries;
         this.retryConditionFromBuilder = builder.retryCondition;
-        if (numRetries == 0) {
-            this.retryCondition = retryConditionFromBuilder;
-        } else {
-            this.retryCondition = AndRetryCondition.create(MaxNumberOfRetriesCondition.create(numRetries),
-                                                           retryConditionFromBuilder);
-        }
+        this.retryCondition = AndRetryCondition.create(MaxNumberOfRetriesCondition.create(numRetries),
+                                                       retryConditionFromBuilder);
     }
 
     public RetryCondition retryCondition() {
