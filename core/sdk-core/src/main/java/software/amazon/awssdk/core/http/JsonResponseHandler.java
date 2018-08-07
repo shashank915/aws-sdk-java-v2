@@ -95,8 +95,8 @@ public final class JsonResponseHandler<T> implements HttpResponseHandler<T> {
 
         JsonParser jsonParser = null;
 
-        if (shouldParsePayloadAsJson() && response.content().isPresent()) {
-            jsonParser = jsonFactory.createParser(response.content().get());
+        if (shouldParsePayloadAsJson()) {
+            jsonParser = jsonFactory.createParser(response.content().orElse(null));
         }
 
         try {

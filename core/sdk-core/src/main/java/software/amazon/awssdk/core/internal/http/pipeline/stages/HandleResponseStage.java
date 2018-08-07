@@ -121,7 +121,7 @@ public class HandleResponseStage<OutputT> implements RequestPipeline<SdkHttpFull
         } catch (Exception e) {
             String errorMessage = String.format("Unable to unmarshall error response (%s). " +
                                                 "Response Code: %d, Response Text: %s", e.getMessage(),
-                                                httpResponse.statusCode(), httpResponse.statusText());
+                                                httpResponse.statusCode(), httpResponse.statusText().orElse("null"));
             throw SdkClientException.builder().message(errorMessage).cause(e).build();
         }
     }

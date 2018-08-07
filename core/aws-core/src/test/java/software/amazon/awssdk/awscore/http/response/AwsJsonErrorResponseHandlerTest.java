@@ -206,9 +206,10 @@ public class AwsJsonErrorResponseHandlerTest {
                 .thenReturn(AwsServiceException.builder().build());
 
         AwsServiceException exception = responseHandler.handle(httpResponseBuilder.build(), new ExecutionAttributes());
-        assertThat(exception.awsErrorDetails().sdkHttpResponse().headers(), hasEntry("FooHeader", "FooValue"));
         assertThat(exception.awsErrorDetails().sdkHttpResponse().headers(),
-                   hasEntry(HttpResponseHandler.X_AMZN_REQUEST_ID_HEADER, "1234"));
+                   hasEntry("FooHeader", Collections.singletonList("FooValue")));
+        assertThat(exception.awsErrorDetails().sdkHttpResponse().headers(),
+                   hasEntry(HttpResponseHandler.X_AMZN_REQUEST_ID_HEADER, Collections.singletonList("1234")));
     }
 
     private void expectUnmarshallerMatches() throws Exception {

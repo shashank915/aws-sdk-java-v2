@@ -92,12 +92,8 @@ public final class DefaultErrorResponseHandler implements HttpResponseHandler<Aw
 
     private AwsServiceException createServiceException(SdkHttpFullResponse errorResponse) throws Exception {
 
-        if (!errorResponse.content().isPresent()) {
-            return null;
-        }
-
         // Try to parse the error response as XML
-        final Document document = documentFromContent(errorResponse.content().get(), idString(errorResponse));
+        final Document document = documentFromContent(errorResponse.content().orElse(null), idString(errorResponse));
 
         /*
          * We need to select which exception unmarshaller is the correct one to
